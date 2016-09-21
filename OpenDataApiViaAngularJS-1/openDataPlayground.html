@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+	<script src="controllerOpenData.js"></script>
+	
+<body ng-app="myApp">
+	
+		<div ng-controller="openDataCtrl" data-ng-init="getData()">
+			(Next update in: {{timeCounter}} seconds)
+			<table>
+				<tr>
+   <th>Address</th>
+   <th>Current Availability</th>
+   <th>Total parkingspots</th>
+   <th>Updated at</th>
+ </tr>
+				<tr ng-repeat="x in items.concat(items2)" ng-style="{'background-color': getTrColor(x.parkingStatus.availableCapacity)}">
+					<td><div ng-show="x.address !='' ">{{x.address }}</div><div ng-show="x.address =='' ">{{x.description }}</div>
+						<div ng-if="ToggleButtonDetailsGent">
+Openingtimes:
+<ul>
+<li ng-repeat="y in x.openingTimes[0].days">
+	{{y}}
+</li><br/>
+Open from: {{x.openingTimes[0].from}}<br/>
+Open until: {{x.openingTimes[0].to}}<br/>
+
+</ul>
+</div>
+					</td>
+					<td>{{x.parkingStatus.availableCapacity}}</td>
+					<td>{{x.parkingStatus.totalCapacity}}</td>
+					<td>{{x.parkingStatus.lastModifiedDate}}</td>
+					<td><input type="button" ng-click="ToggleButtonDetailsGent = !ToggleButtonDetailsGent" value="Details"></input>
+</td>
+				</tr>
+				
+			</table>
+			
+<!--
+			<form>
+				Title: <input type="text" ng-model="title" /> <br /> Begin Hour: <input
+					type="text" ng-model="startingHour" /> <br /> End Hour: <input
+					type="text" ng-model="endingHour" /> <br /> Sequence Id: <input
+					type="text" ng-model="sequenceId" /> 
+					<input type="button"
+					value="verstuur" ng-click="insertdata()" />
+
+			</form>-->
+		</div>
+
+
+
+
+ <div id="output"></div>
+    </div>
+    <div id="map"></div>
+
+
+
+<script>
+function getLocation() {
+  navigator.geolocation.getCurrentPosition(
+            function(position) {
+                var latLngA = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+                var latLngB = new google.maps.LatLng(40.778721618334295, -73.96648406982422);
+                var distance = google.maps.geometry.spherical.computeDistanceBetween(latLngA, latLngB);
+                alert(distance);//In metres
+            },
+            function() {
+                alert("geolocation not supported!!");
+            }
+    );
+}
+</script>
+
+<script>getLocation()</script>
+<script src="googleMapsDesign.js"></script>
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDhxjB_vsxwClWygcgiGt45UjZ0ByL7NVs&callback=initMap(55.93,3.118,50.087,14.421)">
+    </script>
+
+</body>
+</html>
