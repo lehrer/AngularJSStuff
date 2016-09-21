@@ -34,6 +34,9 @@ return 'red';
 else if (value < 100) {
 return 'orange'; 
 	  }
+	  else if (value < 200) {
+return '#9932CC'; 
+	  }
 else {
 	return '#7FFF00'; 
 }
